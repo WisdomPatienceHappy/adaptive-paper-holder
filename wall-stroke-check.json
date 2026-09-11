@@ -1,0 +1,12 @@
+{
+  "scope": "Ideal parallel plunger centerline/top rear contact, fixed stop underside z1.5, stop x5.25..7.4; no pawl, forces/friction or full solids check",
+  "first_contact_angle_deg": 147.632,
+  "stroke_mm": 3.999999999999999,
+  "contact_x_range_mm": [
+    6.523802579766302,
+    7.180263534770059
+  ],
+  "max_contact_z_error_mm": 6.661338147750939e-16,
+  "minimum_return_spring_span_mm": 7.500000000000001,
+  "stop_width_contains_contact": true
+}
