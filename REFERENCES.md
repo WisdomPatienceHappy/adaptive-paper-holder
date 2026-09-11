@@ -45,3 +45,11 @@ Recommended public wording: “A concept study inspired by Craighill’s desk-pa
 ## Minimum information that would improve fidelity
 
 One known distance between visible pivots plus a near-orthographic side view would calibrate planar lengths; a top/end view with plate spacing would constrain 3D packaging. Exact original pivot coordinates, travel stops and material/section dimensions are required before manufacturer-scale forces can be claimed. Until those exist, calculations should remain explicitly tied to our provisional geometry.
+
+## Four-view exterior revision
+
+Four additional supplied stills show the assembled pad from oblique, top and context views plus an open side prototype. Their dimensionless landmarks are in `reference-proportions.json`. They establish a broad handle, two separated short fingers and compact rear/base support rather than a full clipboard slab. The new model uses paper width W=200 assumed model millimeters, handle width0.88W/depth0.20W, finger centers0.73W apart and exposed paper length1.14W. W is not a measured product width. The earlier planar pivot coordinates and0.825 scale are retained; new out-of-plane widths are selected to match the observed proportions.
+
+The exposed full C cross-shaft was replaced by two side axles joining each jaw and coupler; the B cross-shaft retains the central proposed runner load path. Jaw outlines were softened while pivot and contact positions stayed fixed. Renders show these proposed meshes; they do not establish hidden construction or manufactured clearances. The public force table still uses the unchanged planar trajectory and explicitly assumed contact laws.
+
+The handle finger lip is a provisional interpretation of the grip edge, with a 3 mm raised profile. Show mechanism ghosts surrounding product parts and keeps adaptive components opaque as a visual inspection aid; it does not change physical geometry. Internal part sizes and structural strength are unvalidated.

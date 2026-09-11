@@ -34,3 +34,7 @@ Analysis snapshots intentionally preserve the geometry they tested. The live vie
 
 ## Direct handle interaction
 Grab the visible A housing or its “Drag handle” target. Playback pauses; dragging follows the hinge plane with a screen-tangent fallback near edge-on views, bounded to 100–180 degrees. Opening and closing map onto the existing illustrative cycle branches; release keeps the pose. This is not a force interaction or a contact-history solve. Background dragging orbits the camera. Advanced inspection retains pose scrubbing, individual-part controls and geometric diagnostics.
+
+## Four-view exterior reconstruction
+
+The default presentation is now the wide tabletop pad. Advanced inspection → Layout retains the earlier clipboard study for comparison. `reference-proportions.json` records image-derived ratios; `renders/` contains before/after views and reproducible mesh snapshots. There is no claim of exact original CAD or metric measurements. Broad handle, side fingers and compact frame follow the reference silhouette; central adaptive internals remain proposed. The out-of-plane revision does not change the planar linkage equations used in the retained force analysis.

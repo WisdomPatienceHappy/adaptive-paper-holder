@@ -1,0 +1,91 @@
+{
+  "schema": "image-proportion-baseline-v1",
+  "units": "dimensionless, paper width W=1",
+  "measurement_method": "manual visual pixel landmarks; not perspective corrected",
+  "physical_scale_mm": null,
+  "reference_image": "top-closed-prototype.png",
+  "paper_width_pixels": 120,
+  "parameters": {
+    "paper_width": 1,
+    "paper_exposed_length": 1.14,
+    "overall_clamp_width": 1.02,
+    "cross_handle_width": 0.88,
+    "cross_handle_fore_aft_depth": 0.2,
+    "hardware_fore_aft_envelope": 0.54,
+    "finger_width": 0.075,
+    "finger_forward_projection": 0.24,
+    "finger_center_spacing": 0.73,
+    "orange_outer_side_link_width": 0.075,
+    "rear_dark_cross_body_width": 0.74,
+    "rear_dark_cross_body_depth": 0.16,
+    "backing_slab_visible_beyond_clamp": false
+  },
+  "ranges": {
+    "overall_clamp_width": [
+      0.98,
+      1.08
+    ],
+    "cross_handle_width": [
+      0.83,
+      0.92
+    ],
+    "hardware_fore_aft_envelope": [
+      0.48,
+      0.58
+    ],
+    "finger_width": [
+      0.06,
+      0.09
+    ],
+    "finger_forward_projection": [
+      0.2,
+      0.28
+    ],
+    "finger_center_spacing": [
+      0.69,
+      0.77
+    ]
+  },
+  "side_prototype": {
+    "reference_image": "side-prototype-and-pliers.png",
+    "pixel_pivots_current_labels": {
+      "D": [
+        253,
+        292
+      ],
+      "C": [
+        260,
+        244
+      ],
+      "B": [
+        291,
+        224
+      ],
+      "A": [
+        296,
+        260
+      ]
+    },
+    "pivot_uncertainty_pixels": 2,
+    "fixed_A_D_span_pixels": 53.6,
+    "jaw_D_C_span_pixels": 48.51,
+    "coupler_C_B_span_pixels": 36.89,
+    "lever_A_B_span_pixels": 36.35,
+    "base_visible_x_pixels": [
+      119,
+      311
+    ],
+    "base_thickness_pixels": 14,
+    "open_top_z_image_pixels": 185,
+    "note": "Different open pose and perspective from assembled top view. Do not derive physical scale or equate projected long base with closed hardware depth."
+  },
+  "source_baseline_rules": [
+    "Pair short jaws/fingers at opposite transverse ends",
+    "Use broad transverse handle joining mirrored side linkages",
+    "Use orange short side couplers",
+    "Compact base/rear cross structure; no visible full clipboard slab",
+    "Paper overhang remains visually dominant",
+    "Keep adaptive runner/pawl/engager additions separately labeled"
+  ],
+  "confidence": "medium for top proportions, low for hidden depth and thickness; no physical dimension confidence"
+}

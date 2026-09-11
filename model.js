@@ -72,30 +72,39 @@ function wholeState(p){
 }
 function buildScene(p={}){
  if(p.full===false)return buildSubassembly(p);
- const st=wholeState(p),s=st.scale;
+ const st=wholeState(p),s=st.scale,ref=!!p.reference,W=200;
  let parts=buildSubassembly({...p,length:40,travel:33-st.r*s,actuation:st.act});
  parts=parts.filter(q=>!q.name.startsWith('Fixed frame cheek')&&q.kind!=='candidate');
  for(const q of parts){if(q.name==='E fixed frame pin')continue;q.v=q.v.map(([x,y,z])=>[x*Math.sin(st.t)+(z-2.5)*Math.cos(st.t),y,-x*Math.cos(st.t)+(z-2.5)*Math.sin(st.t)+2.5]);}
  function project(pt){return [(32-pt[1])*s,(pt[0]-44)*s+2.5]}
  function prism(name,color,profile,y,thick,kind='mechanism'){let v=[];for(const yy of [y,y+thick])for(const [x,z] of profile)v.push([x,yy,z]);let n=profile.length,f=[Array.from({length:n},(_,i)=>n-1-i),Array.from({length:n},(_,i)=>n+i)];for(let i=0;i<n;i++)f.push([i,(i+1)%n,(i+1)%n+n,i+n]);parts.push({name,color,v,f,kind});}
  function shaft(name,pt,r,len){const prof=[];for(let j=0;j<20;j++)prof.push([pt[0]+r*Math.cos(j*Math.PI/10),pt[1]+r*Math.sin(j*Math.PI/10)]);prism(name,'#53636b',prof,-len/2,len)}
- const frame=[[-133,0],[-12,0],[40,1],[40,32],[47,43],[55,40],[59,-11],[-133,-17]].map(project),jaw=[[-45,58],[-34,44],[-14,42],[-7,37],[-10,0],[-7,-7],[7,-7],[15,33],[20,45],[12,57],[3,61],[-7,57]].map(x=>project(st.rot(x))),B=project(st.B),C=project(st.C),D=project([0,0]);
+ function softened(poly){if(!ref)return poly;const out=[];for(let i=0;i<poly.length;i++){const a=poly[(i+poly.length-1)%poly.length],b=poly[i],c=poly[(i+1)%poly.length],la=Math.hypot(a[0]-b[0],a[1]-b[1]),lc=Math.hypot(c[0]-b[0],c[1]-b[1]),d=Math.min(2.5,.2*la,.2*lc),u=b.map((x,j)=>x+(a[j]-x)*d/la),v=b.map((x,j)=>x+(c[j]-x)*d/lc);for(let j=0;j<=4;j++){const t=j/4;out.push(b.map((x,k)=>(1-t)**2*u[k]+2*t*(1-t)*x+t*t*v[k]))}}return out}
+ const frame=[[-(ref?45:133),0],[-12,0],[40,1],[40,32],[47,ref?37:43],[55,ref?35:40],[59,ref?-5:-11],[-(ref?45:133),ref?-5:-17]].map(project),jaw=softened([[-45,58],[-34,44],[-14,42],[-7,37],[-10,0],[-7,-7],[7,-7],[15,33],[20,45],[12,57],[3,61],[-7,57]]).map(x=>project(st.rot(x))),B=project(st.B),C=project(st.C),D=project([0,0]);
  for(const side of [-1,1]){
-  let yy=side*(6.4+(p.explode||0));prism('Fixed frame plate '+side,'#84978e',frame,yy-.6,1.2,'frame');
-  yy=side*(4+(p.explode||0));prism('Jaw side plate '+side,'#9ba9a4',jaw,yy-.6,1.2);
+  let yy=side*((ref?W*.475:6.4)+(p.explode||0));prism('Fixed frame plate '+side,'#84978e',frame,yy-(ref?2.5:.6),ref?5:1.2,'frame');
+  yy=side*((ref?W*.365:4)+(p.explode||0));prism('Jaw side plate '+side,'#9ba9a4',jaw,yy-(ref?W*.0375:.6),ref?W*.075:1.2);
   const dx=C[0]-B[0],dz=C[1]-B[1],len=Math.hypot(dx,dz),nx=-dz/len*2, nz=dx/len*2;
-  prism('BC fixed coupler '+side,'#e7a128',[[B[0]+nx,B[1]+nz],[C[0]+nx,C[1]+nz],[C[0]-nx,C[1]-nz],[B[0]-nx,B[1]-nz]],side*(5.4+(p.explode||0))-.65,1.3);
+  const capsule=[];if(ref){const a=Math.atan2(dz,dx);for(let j=0;j<=12;j++){let t=a+Math.PI/2+j*Math.PI/12;capsule.push([B[0]+5.6*Math.cos(t),B[1]+5.6*Math.sin(t)])}for(let j=0;j<=12;j++){let t=a-Math.PI/2+j*Math.PI/12;capsule.push([C[0]+5.6*Math.cos(t),C[1]+5.6*Math.sin(t)])}}
+  prism('BC fixed coupler '+side,'#e7a128',ref?capsule:[[B[0]+nx,B[1]+nz],[C[0]+nx,C[1]+nz],[C[0]-nx,C[1]-nz],[B[0]-nx,B[1]-nz]],side*((ref?W*.45:5.4)+(p.explode||0))-(ref?2:.65),ref?4:1.3);
+  if(ref)for(const [name,pt] of [['B',B],['C',C]]){const circle=Array.from({length:20},(_,j)=>[pt[0]+3.1*Math.cos(j*Math.PI/10),pt[1]+3.1*Math.sin(j*Math.PI/10)]);prism(name+' external pin head '+side,'#c1c4bf',circle,side*W*.45+(side>0?2:-3),1,'shaft');}
  }
- shaft('C shared pivot',C,.85,14);shaft('D shared pivot',D,.85,16);
+ if(ref){for(const side of [-1,1]){const circle=Array.from({length:20},(_,j)=>[C[0]+1.3*Math.cos(j*Math.PI/10),C[1]+1.3*Math.sin(j*Math.PI/10)]);prism('C side pivot '+side,'#53636b',circle,side*W*.4075-W*.078,W*.156,'shaft')}}else shaft('C shared pivot',C,.85,14);shaft('D shared pivot',D,.85,ref?W*1.02:16);
+ if(ref){parts=parts.filter(q=>!['A shared pivot','B shared bearing shaft'].includes(q.name));shaft('A shared pivot',[0,2.5],.85,W*1.02);shaft('B shared bearing shaft',B,.8,W*.94);
+ const transform=([x,z])=>[x*Math.sin(st.t)+(z-2.5)*Math.cos(st.t),-x*Math.cos(st.t)+(z-2.5)*Math.sin(st.t)+2.5];
+ for(const side of [-1,1])prism('A housing side exterior '+side,'#8e999a',[[-40,-.5],[2,-.5],[2,5.5],[-40,5.5]].map(transform),side*W*.425-2.5,5,'housing');
+ const hp=[],rad=5;for(const [xx,yy,ang] of [[-4-rad,W*.44-rad,0],[-4-W*.2+rad,W*.44-rad,90],[-4-W*.2+rad,-W*.44+rad,180],[-4-rad,-W*.44+rad,270]])for(let j=0;j<=6;j++){const a=(ang+j*15)*Math.PI/180;hp.push([xx+rad*Math.cos(a),yy+rad*Math.sin(a)])}const hv=[];for(const z of [5.5,8])for(const [x,y]of hp){const q=transform([x,z]);hv.push([q[0],y,q[1]])}const hn=hp.length,hf=[Array.from({length:hn},(_,i)=>hn-1-i),Array.from({length:hn},(_,i)=>hn+i)];for(let i=0;i<hn;i++)hf.push([i,(i+1)%hn,(i+1)%hn+hn,i+hn]);parts.push({name:'A broad cross handle',color:'#899494',v:hv,f:hf,kind:'handle'});prism('A handle finger lip','#899494',[[-44,7.5],[-41.5,7.5],[-41.5,10.5],[-43,11],[-44,10]].map(transform),-W*.40,W*.80,'handle');}
  // Backplate web and depicted paper retain the source drawing's geometry.
- prism('Backplate web','#84978e',[[-133,0],[-12,0],[-12,-5],[-133,-5]].map(project),-6.4,12.8,'frame');
- const bx=32*s;prism('Clipboard board','#cbb58d',[[bx,-230],[bx+3,-230],[bx+3,12],[bx,12]],-82,164,'board');
- prism('Paper stack','#faf9ef',[[bx-st.paper,-215],[bx,-215],[bx,-43],[bx-st.paper,-43]],-73,146,'paper');
- for(let zz=-214;zz<-45;zz+=21)prism('Paper ruling','#c5d2d6',[[bx-st.paper-.015,zz],[bx-st.paper-.025,zz],[bx-st.paper-.025,zz+.12],[bx-st.paper-.015,zz+.12]],-68,136,'paper');
+ prism('Backplate web','#84978e',[[-(ref?45:133),0],[ref?59:-12,0],[ref?59:-12,-5],[-(ref?45:133),-5]].map(project),ref?-W*.51:-6.4,ref?W*1.02:12.8,'frame');
+ if(ref)prism('Fixed rear cross wall','#84978e',[[40,0],[40,32],[47,37],[55,35],[59,-5]].map(project),-W*.51,W*1.02,'frame');
+ const bx=32*s;
+ if(ref){const rear=-30,front=rear-W*1.14;prism('Paper stack lower sheets','#ed846a',[[bx-st.paper*.25,front],[bx,front],[bx,rear],[bx-st.paper*.25,rear]],-W/2,W,'paper');prism('Paper stack top sheets','#d8ed47',[[bx-st.paper,front],[bx-st.paper*.25,front],[bx-st.paper*.25,rear],[bx-st.paper,rear]],-W/2,W,'paper');}
+ else{prism('Clipboard board','#cbb58d',[[bx,-230],[bx+3,-230],[bx+3,12],[bx,12]],-82,164,'board');prism('Paper stack','#faf9ef',[[bx-st.paper,-215],[bx,-215],[bx,-43],[bx-st.paper,-43]],-73,146,'paper');for(let zz=-214;zz<-45;zz+=21)prism('Paper ruling','#c5d2d6',[[bx-st.paper-.015,zz],[bx-st.paper-.025,zz],[bx-st.paper-.025,zz+.12],[bx-st.paper-.015,zz+.12]],-68,136,'paper');}
  prism('Fixed actuator contact stop','#668477',[[5.25,1.5],[7.4,1.5],[7.4,3.1],[5.25,3.1]],-2.2,4.4,'stop');
  prism('Stop frame bracket','#84978e',[[0,2.5],[6.4,2.5],[6.4,3.1],[0,3.1]],-6.4,12.8,'stop');
- const tip=project(st.rot([-33,42]));prism('Wide jaw contact bridge','#647b6f',[[tip[0]-1,tip[1]-2],[tip[0]+.3,tip[1]-2],[tip[0]+.3,tip[1]+2],[tip[0]-1,tip[1]+2]],-23,46);
- const pad=Math.max(.05,Math.min(1,st.gap*s-st.paper));prism('Compliant jaw pad','#303d39',[[tip[0]+.3,tip[1]-2],[tip[0]+pad,tip[1]-2],[tip[0]+pad,tip[1]+2],[tip[0]+.3,tip[1]+2]],-23,46);
+ const tip=project(st.rot([-33,42])),pad=Math.max(.05,Math.min(1,st.gap*s-st.paper));
+ for(const yy of (ref?[-W*.365,W*.365]:[0])){const width=ref?W*.075:46;prism('Jaw contact foot','#647b6f',[[tip[0]-1,tip[1]-2],[tip[0]+.3,tip[1]-2],[tip[0]+.3,tip[1]+2],[tip[0]-1,tip[1]+2]],yy-width/2,width);prism('Compliant jaw pad','#303d39',[[tip[0]+.3,tip[1]-2],[tip[0]+pad,tip[1]-2],[tip[0]+pad,tip[1]+2],[tip[0]+.3,tip[1]+2]],yy-width/2,width);}
+ if(ref)for(const q of parts)q.v=q.v.map(([x,y,z])=>[-z,-y,bx-x]);
  return parts;
 }
 if(typeof module!=='undefined')module.exports={buildScene,wholeState};
