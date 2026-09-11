@@ -1,0 +1,266 @@
+{
+  "scope": "Prescribed viewer geometry and conditional virtual work only; no solved grip/contact/handle equilibrium",
+  "recorded_utc": "2026-09-11T01:44:57.957Z",
+  "source": "run-001/model.snapshot.js",
+  "source_sha256": "3744e1a17c1b809bf49054673c7e4d01e5e2ad868b830fb7bcb42b90bd8e39de",
+  "node": "v26.3.1",
+  "scale_mm_per_image_unit": 0.825,
+  "signed_distance_convention": "cross(C-A,B-A)/|C-A| in source xy frame; positive is chosen overcenter side here",
+  "derivation": "(C-B).(C_phi*dphi-B_q)=0; dg/dr=tip_x*dphi/dr; dg/dtheta=scale*tip_x*dphi/dtheta",
+  "free_runner_balance": "0=F_r+Q*dg/dr only if no capture reaction/other radial generalized force",
+  "captured_runner_balance": "0=F_r+Q*dg/dr+R_capture+other forces; Q is not determined by spring alone",
+  "rows": [
+    {
+      "paper_mm": 0.2,
+      "theta_deg": 180,
+      "r_image": 39.65274855891049,
+      "r_mm": 32.71351756110115,
+      "A_mm": [
+        36.3,
+        26.4
+      ],
+      "B_mm": [
+        3.5864824388988468,
+        26.400000000000006
+      ],
+      "C_mm": [
+        -27.43864768448604,
+        28.9790115988563
+      ],
+      "signed_B_to_AC_mm": 1.3225815894255546,
+      "toggle_deg": 177.73355895855772,
+      "overcenter_deg": 2.2664410414422775,
+      "backing_gap_mm": 0.9856777512839172,
+      "nominal_pad_free_thickness_mm": 1,
+      "pad_compression_mm": 0.21432224871608274,
+      "pad_clearance_mm": 0,
+      "dgap_dr": -1.650119084921375,
+      "dgap_dtheta_mm_per_rad": 4.487270141851494,
+      "provisional_free_runner_Q_N": 0.3636101209195995,
+      "conditional_jaw_closing_torque_using_Qfree_Nmm": 1.63161683887753,
+      "finite_differences": [
+        {
+          "h_r_mm": 0.01,
+          "h_theta_rad": 0.01,
+          "dgap_dr_fd": -1.650118986109117,
+          "dgap_dtheta_fd_mm_per_rad": 4.493950756544085,
+          "error_dr": 9.881225793151316e-8,
+          "error_dtheta": 0.006680614692591291
+        },
+        {
+          "h_r_mm": 0.001,
+          "h_theta_rad": 0.001,
+          "dgap_dr_fd": -1.6501190839235402,
+          "dgap_dtheta_fd_mm_per_rad": 4.487336944130282,
+          "error_dr": 9.97834703753142e-10,
+          "error_dtheta": 0.00006680227878863576
+        },
+        {
+          "h_r_mm": 0.0001,
+          "h_theta_rad": 0.0001,
+          "dgap_dr_fd": -1.6501190850299883,
+          "dgap_dtheta_fd_mm_per_rad": 4.487270809819588,
+          "error_dr": 1.0861334054368399e-10,
+          "error_dtheta": 6.679680941701349e-7
+        },
+        {
+          "h_r_mm": 0.00001,
+          "h_theta_rad": 0.00001,
+          "dgap_dr_fd": -1.6501190857187704,
+          "dgap_dtheta_fd_mm_per_rad": 4.4872701484566235,
+          "error_dr": 7.973954829765262e-10,
+          "error_dtheta": 6.605129776460217e-9
+        }
+      ]
+    },
+    {
+      "paper_mm": 1,
+      "theta_deg": 180,
+      "r_image": 39.04285519876173,
+      "r_mm": 32.210355538978426,
+      "A_mm": [
+        36.3,
+        26.4
+      ],
+      "B_mm": [
+        4.089644461021574,
+        26.400000000000006
+      ],
+      "C_mm": [
+        -26.88877194724558,
+        29.48993799873134
+      ],
+      "signed_B_to_AC_mm": 1.5732101564249967,
+      "toggle_deg": 177.2717552040389,
+      "overcenter_deg": 2.7282447959611034,
+      "backing_gap_mm": 1.8140692250216648,
+      "nominal_pad_free_thickness_mm": 1,
+      "pad_compression_mm": 0.1859307749783352,
+      "pad_clearance_mm": 0,
+      "dgap_dr": -1.642378997473277,
+      "dgap_dtheta_mm_per_rad": 5.276664152977864,
+      "provisional_free_runner_Q_N": 0.3653237169514904,
+      "conditional_jaw_closing_torque_using_Qfree_Nmm": 1.9276905614705613,
+      "finite_differences": [
+        {
+          "h_r_mm": 0.01,
+          "h_theta_rad": 0.01,
+          "dgap_dr_fd": -1.6423789033106793,
+          "dgap_dtheta_fd_mm_per_rad": 5.283012443513896,
+          "error_dr": 9.416259771910518e-8,
+          "error_dtheta": 0.006348290536031698
+        },
+        {
+          "h_r_mm": 0.001,
+          "h_theta_rad": 0.001,
+          "dgap_dr_fd": -1.6423789965279931,
+          "dgap_dtheta_fd_mm_per_rad": 5.276727633321654,
+          "error_dr": 9.452838511947448e-10,
+          "error_dtheta": 0.00006348034378955703
+        },
+        {
+          "h_r_mm": 0.0001,
+          "h_theta_rad": 0.0001,
+          "dgap_dr_fd": -1.6423789975523737,
+          "dgap_dtheta_fd_mm_per_rad": 5.27666478777089,
+          "error_dr": 7.909672916639465e-11,
+          "error_dtheta": 6.347930252559308e-7
+        },
+        {
+          "h_r_mm": 0.00001,
+          "h_theta_rad": 0.00001,
+          "dgap_dr_fd": -1.6423789978015078,
+          "dgap_dtheta_fd_mm_per_rad": 5.276664159015176,
+          "error_dr": 3.282307758922798e-10,
+          "error_dtheta": 6.0373119836754086e-9
+        }
+      ]
+    },
+    {
+      "paper_mm": 3.6,
+      "theta_deg": 180,
+      "r_image": 37.04508966650671,
+      "r_mm": 30.562198974868036,
+      "A_mm": [
+        36.3,
+        26.4
+      ],
+      "B_mm": [
+        5.737801025131962,
+        26.400000000000006
+      ],
+      "C_mm": [
+        -25.041490936220317,
+        31.073883434343948
+      ],
+      "signed_B_to_AC_mm": 2.321940697847128,
+      "toggle_deg": 175.79629794331103,
+      "overcenter_deg": 4.203702056688968,
+      "backing_gap_mm": 4.4940780874943504,
+      "nominal_pad_free_thickness_mm": 1,
+      "pad_compression_mm": 0.1059219125056492,
+      "pad_clearance_mm": 0,
+      "dgap_dr": -1.6074176440631596,
+      "dgap_dtheta_mm_per_rad": 7.459892716166656,
+      "provisional_free_runner_Q_N": 0.37326951226150934,
+      "conditional_jaw_closing_torque_using_Qfree_Nmm": 2.7845505156867136,
+      "finite_differences": [
+        {
+          "h_r_mm": 0.01,
+          "h_theta_rad": 0.01,
+          "dgap_dr_fd": -1.6074175669539903,
+          "dgap_dtheta_fd_mm_per_rad": 7.465078347331512,
+          "error_dr": 7.710916927194944e-8,
+          "error_dtheta": 0.005185631164856375
+        },
+        {
+          "h_r_mm": 0.001,
+          "h_theta_rad": 0.001,
+          "dgap_dr_fd": -1.6074176432955498,
+          "dgap_dtheta_fd_mm_per_rad": 7.459944573257448,
+          "error_dr": 7.676097535380677e-10,
+          "error_dtheta": 0.00005185709079214007
+        },
+        {
+          "h_r_mm": 0.0001,
+          "h_theta_rad": 0.0001,
+          "dgap_dr_fd": -1.6074176441294163,
+          "dgap_dtheta_fd_mm_per_rad": 7.459893234749603,
+          "error_dr": 6.625677784199979e-11,
+          "error_dtheta": 5.18582947250934e-7
+        },
+        {
+          "h_r_mm": 0.00001,
+          "h_theta_rad": 0.00001,
+          "dgap_dr_fd": -1.6074176452285371,
+          "dgap_dtheta_fd_mm_per_rad": 7.459892721723981,
+          "error_dr": 1.1653775722209048e-9,
+          "error_dtheta": 5.557325266636326e-9
+        }
+      ]
+    },
+    {
+      "paper_mm": 10,
+      "theta_deg": 180,
+      "r_image": 31.92345052622953,
+      "r_mm": 26.33684668413936,
+      "A_mm": [
+        36.3,
+        26.4
+      ],
+      "B_mm": [
+        9.963153315860637,
+        26.400000000000006
+      ],
+      "C_mm": [
+        -20.103578366242846,
+        34.47475361583215
+      ],
+      "signed_B_to_AC_mm": 3.732338150748953,
+      "toggle_deg": 172.24550122744702,
+      "overcenter_deg": 7.754498772552978,
+      "backing_gap_mm": 11.010654783402122,
+      "nominal_pad_free_thickness_mm": 1,
+      "pad_compression_mm": 0,
+      "pad_clearance_mm": 0.010654783402122447,
+      "dgap_dr": -1.467491199037694,
+      "dgap_dtheta_mm_per_rad": 10.379641137406841,
+      "provisional_free_runner_Q_N": 0.40886105510782583,
+      "conditional_jaw_closing_torque_using_Qfree_Nmm": 4.243831027080755,
+      "finite_differences": [
+        {
+          "h_r_mm": 0.01,
+          "h_theta_rad": 0.01,
+          "dgap_dr_fd": -1.4674911674566047,
+          "dgap_dtheta_fd_mm_per_rad": 10.3820230818011,
+          "error_dr": 3.158108929923742e-8,
+          "error_dtheta": 0.0023819443942585394
+        },
+        {
+          "h_r_mm": 0.001,
+          "h_theta_rad": 0.001,
+          "dgap_dr_fd": -1.46749119871985,
+          "dgap_dtheta_fd_mm_per_rad": 10.379664960247448,
+          "error_dr": 3.1784397336309667e-10,
+          "error_dtheta": 0.000023822840606868567
+        },
+        {
+          "h_r_mm": 0.0001,
+          "h_theta_rad": 0.0001,
+          "dgap_dr_fd": -1.4674911991492399,
+          "dgap_dtheta_fd_mm_per_rad": 10.379641375672486,
+          "error_dr": 1.1154588364092888e-10,
+          "error_dtheta": 2.3826564543583117e-7
+        },
+        {
+          "h_r_mm": 0.00001,
+          "h_theta_rad": 0.00001,
+          "dgap_dr_fd": -1.4674911983725278,
+          "dgap_dtheta_fd_mm_per_rad": 10.379641139830474,
+          "error_dr": 6.651661443868306e-10,
+          "error_dtheta": 2.4236328499682713e-9
+        }
+      ]
+    }
+  ]
+}

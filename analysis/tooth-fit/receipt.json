@@ -1,0 +1,118 @@
+{
+  "sourceSha256": "3744e1a17c1b809bf49054673c7e4d01e5e2ad868b830fb7bcb42b90bd8e39de",
+  "units": "mm, degrees, mm^2 projected intersection",
+  "scope": "Rigid finite polygon intersection only. No force, compliance, tooth contact equilibrium, out-of-plane collision or actual seating dynamics.",
+  "candidate": {
+    "finalTip": [
+      [
+        -16.2,
+        0.1
+      ],
+      [
+        -15.8,
+        0.1
+      ],
+      [
+        -16,
+        0.78
+      ]
+    ],
+    "fixedPivot": [
+      -15,
+      -1.7
+    ],
+    "phiFinal": 116.565051,
+    "rotation": "Whole rigid tip and tapered arm rotate about P. Runner never snaps or shifts.",
+    "note": "Candidate requires replacing the existing radius0.48 capsule near T with tapered arm; changing tip alone leaves the bulky capsule."
+  },
+  "phase": {
+    "sampleStep": 0.0001,
+    "period": 0.65,
+    "collisionFreeCount": 2513,
+    "total": 6501,
+    "freeIntervals": [
+      [
+        0.273,
+        0.5242
+      ]
+    ]
+  },
+  "papers": [
+    {
+      "paper": 0.2,
+      "hold": {
+        "paper": 0.2,
+        "pose": 0.75,
+        "angle": 180,
+        "bx": -32.71351756110115,
+        "act": 0.9999999999999998,
+        "phi": 116.565051,
+        "currentBoxArea": 0.10982667775476695,
+        "candidateTipArea": 0,
+        "candidateArmArea": 0
+      },
+      "cycleMaxBoxArea": 0.12375000127487157,
+      "cycleMaxCandidateTipArea": 0.053307458085526394,
+      "cycleMaxCandidateArmArea": 0,
+      "candidateCollisionSamples": 87,
+      "total": 1001
+    },
+    {
+      "paper": 1,
+      "hold": {
+        "paper": 1,
+        "pose": 0.75,
+        "angle": 180,
+        "bx": -32.210355538978426,
+        "act": 0.9999999999999998,
+        "phi": 116.565051,
+        "currentBoxArea": 0.12375000127487068,
+        "candidateTipArea": 0.0460757939069818,
+        "candidateArmArea": 0
+      },
+      "cycleMaxBoxArea": 0.12375000127487201,
+      "cycleMaxCandidateTipArea": 0.053312315611675265,
+      "cycleMaxCandidateArmArea": 0,
+      "candidateCollisionSamples": 388,
+      "total": 1001
+    },
+    {
+      "paper": 3.6,
+      "hold": {
+        "paper": 3.6,
+        "pose": 0.75,
+        "angle": 180,
+        "bx": -30.562198974868036,
+        "act": 0.9999999999999998,
+        "phi": 116.565051,
+        "currentBoxArea": 0.10700728954187455,
+        "candidateTipArea": 0,
+        "candidateArmArea": 0
+      },
+      "cycleMaxBoxArea": 0.12375000127487157,
+      "cycleMaxCandidateTipArea": 0.05331987821922213,
+      "cycleMaxCandidateArmArea": 0,
+      "candidateCollisionSamples": 120,
+      "total": 1001
+    },
+    {
+      "paper": 10,
+      "hold": {
+        "paper": 10,
+        "pose": 0.75,
+        "angle": 180,
+        "bx": -26.33684668413936,
+        "act": 0.9999999999999998,
+        "phi": 116.565051,
+        "currentBoxArea": 0.12375000127487024,
+        "candidateTipArea": 0.040198460942595604,
+        "candidateArmArea": 0
+      },
+      "cycleMaxBoxArea": 0.12375000127487135,
+      "cycleMaxCandidateTipArea": 0.04699208384531528,
+      "cycleMaxCandidateArmArea": 0,
+      "candidateCollisionSamples": 363,
+      "total": 1001
+    }
+  ]
+}

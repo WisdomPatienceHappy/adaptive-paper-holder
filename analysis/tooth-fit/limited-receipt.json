@@ -1,0 +1,48 @@
+{
+  "scope": "First collision along open-to-commanded angular path for each independent state, finite rigid tip and tapered arm. No imposed runner changes; no force or cam-contact solution; no temporal contact-following dynamics.",
+  "poses": 804,
+  "subdivisionMaxDegrees": 0.2,
+  "requestedClearanceMM": 0.02,
+  "minClearanceMM": 0.020000000000000004,
+  "maxClearanceDeficitMM": 0,
+  "maxAngularBlockDegrees": 23.36435703408712,
+  "blockedCount": 376,
+  "hold": [
+    {
+      "paper": 0.2,
+      "pose": 0.75,
+      "bx": -32.71351756110115,
+      "reachablePhi": 131.43201860814744,
+      "commandedPhi": 116.565051,
+      "blocked": true,
+      "clearance": 0.020000000000000184
+    },
+    {
+      "paper": 1,
+      "pose": 0.75,
+      "bx": -32.210355538978426,
+      "reachablePhi": 134.36456106007236,
+      "commandedPhi": 116.565051,
+      "blocked": true,
+      "clearance": 0.020000000000001013
+    },
+    {
+      "paper": 3.6,
+      "pose": 0.75,
+      "bx": -30.562198974868036,
+      "reachablePhi": 139.76323113035397,
+      "commandedPhi": 116.565051,
+      "blocked": true,
+      "clearance": 0.020000000000000597
+    },
+    {
+      "paper": 10,
+      "pose": 0.75,
+      "bx": -26.33684668413936,
+      "reachablePhi": 133.9089701158405,
+      "commandedPhi": 116.565051,
+      "blocked": true,
+      "clearance": 0.02000000000000006
+    }
+  ]
+}

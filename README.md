@@ -21,3 +21,13 @@ The current model is a geometric illustration, not a force/contact simulation. `
 
 ## Attribution
 Inspired by Craighill's public desk-pad/paper-holder exploration; reference links appear on the page. Independent study, no affiliation or endorsement implied. No reference media is redistributed. Original study code has no additional license grant specified; third-party code remains under its included license.
+
+## Complete reproducible study
+
+- `cad/`: current mesh export, editable Blender file and JS/Python regeneration scripts.
+- `analysis/linkage/`: source snapshot, analytic Jacobians, finite-difference checks, conditional ideal-latch force/stop comparisons. Run `node check.js replay-001` inside that directory; `node conditional-stop.js replay-force-001` regenerates the conditional report receipt.
+- `analysis/tooth-fit/`: pre-change snapshot, original and proposed tip audit, phase samples and conservative first-contact preview. Run `node check.cjs` and `node check-limited.cjs` there.
+- `candidate-tip.js`: canonical viewer helper for rigid triangular tip and tapered arm. The entire pawl follows the limited angle, including its follower. First interference blocks all tested hold approaches; actual engager compatibility is unresolved.
+- `REFERENCES.md`: source provenance, traced proportions and explicit dimension assumptions.
+
+Analysis snapshots intentionally preserve the geometry they tested. The live viewer has a revised tooth preview; its linkage trajectory remains unchanged. The clearance helper checks each pose from the open pawl orientation. It is not a continuous contact-dynamics simulation. Reproduction of finite mesh checks alone does not verify a working physical lock.

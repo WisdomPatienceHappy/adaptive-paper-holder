@@ -1,0 +1,1 @@
+const fs=require('fs'),path=require('path');const {buildScene}=require('../model.js');const p={full:true,length:40,pose:.75,paperThickness:3.6};fs.writeFileSync(path.join(__dirname,'scene.json'),JSON.stringify(buildScene(p)));fs.writeFileSync(path.join(__dirname,'parameters.json'),JSON.stringify(p,null,2));

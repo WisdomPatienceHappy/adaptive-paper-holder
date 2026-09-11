@@ -1,5 +1,3 @@
-var lastToothFit=null;
-var fitAPI=typeof module!=='undefined'?require('./candidate-tip.js'):{collisionLimitedPawl,pawlPolygonsAtPhi};
 function buildSubassembly(p={}) {
  const L=p.length||40,t=p.travel||0,ex=p.explode||0;const parts=[];
  function mesh(name,color,v,f,kind='mechanism'){parts.push({name,color,v,f,kind});}
@@ -26,13 +24,11 @@ function buildSubassembly(p={}) {
  const end=-4,start=Math.min(rx,end-.6),steps=108;
  for(let i=0;i<steps;i++){const pt=j=>{const a=j/steps*12*Math.PI;return[start+(end-start)*j/steps,1.2*Math.cos(a),2.5+1.2*Math.sin(a)]};cyl('Internal adaptation spring',green,pt(i),pt(i+1),.12,6);}
  // ONE 90-degree pawl, pivot fixed on A arm.
- const act=p.actuation||0,k=Math.max(0,Math.min(1,(act-.25)/.5)),commandedPhi=155+(116.565051-155)*k;
- const fit=fitAPI.collisionLimitedPawl(bx,commandedPhi);lastToothFit=fit;const phi=(p.checkTeeth===false?commandedPhi:fit.reachablePhi)*Math.PI/180;const fitted=fitAPI.pawlPolygonsAtPhi(phi*180/Math.PI);
+ const act=p.actuation||0,k=Math.max(0,Math.min(1,(act-.25)/.5)),phi=(155+(116.565051-155)*k)*Math.PI/180;
  const P=[-15,0,-1.7],T=[P[0]+Math.sqrt(5)*Math.cos(phi),0,P[2]+Math.sqrt(5)*Math.sin(phi)],F=[P[0]-Math.sqrt(5)*Math.sin(phi),0,P[2]+Math.sqrt(5)*Math.cos(phi)];
- function pawlPrism(name,poly){let verts=[];for(const y of [-.65,.65])for(const [x,z] of poly)verts.push([x,y,z]);let n=poly.length,faces=[Array.from({length:n},(_,i)=>n-1-i),Array.from({length:n},(_,i)=>n+i)];for(let i=0;i<n;i++)faces.push([i,(i+1)%n,(i+1)%n+n,i+n]);mesh(name,purple,verts,faces)}
- pawlPrism('Pawl tapered tooth arm',fitted.arm);cyl('Pawl follower arm',purple,P,F,.42,10);
+ cyl('Pawl tooth arm',purple,P,T,.48,10);cyl('Pawl follower arm',purple,P,F,.42,10);
  cyl('P shared pivot',shaft,[-15,-5.8,-1.7],[-15,5.8,-1.7],.48,12);
- pawlPrism('Pawl triangular engaging tip',fitted.tip);
+ box('Pawl engaging tip',purple,T[0]-.3,-.65,T[2]-.15,.6,1.3,.65);
  cyl('Pawl follower',purple,[F[0],-.6,F[2]],[F[0],.6,F[2]],.5,12);
  // Parallel actuator and two A-mounted guide stations.
  const slide=-4*act,nose=-14.5+slide,back=3+slide;
@@ -41,8 +37,7 @@ function buildSubassembly(p={}) {
  mesh('Engager bar with continuous raised dwell',gold,av,af);
  box('Engager return spring fixed seat',gray,-26.6,-.6,-4.9,.6,1.2,.7,'housing');
  // Return spring now bears directly on the centered lower end face; no side shoulder.
- box('Engager spring seat cross bracket',gray,-26.6,.6,-4.9,.6,5,.7,'housing');
- box('Engager spring seat upright to A',gray,-26.6,4.4,-4.9,.6,1.2,4.6,'housing');
+ box('Engager spring seat attachment',gray,-26.6,.6,-4.9,.6,5, .7,'housing');
  for(let j=0;j<72;j++){const pt=k=>[-26+(nose+26)*k/72,.15*Math.cos(k/72*12*Math.PI),-4.55+.15*Math.sin(k/72*12*Math.PI)];cyl('Engager return spring','#5f95a1',pt(j),pt(j+1),.06,6);}
  for(const x of [-10,-5]){
   box('Actuator lower guide',gray,x,-1.5,-5.3,1.2,3,.4,'housing');

@@ -1,0 +1,20 @@
+const fs=require('fs'),path=require('path'),crypto=require('crypto');
+const source=process.argv[2]||path.join(__dirname,'model-snapshot.cjs');
+const code=fs.readFileSync(source,'utf8'),vm=require('vm'),ctx={module:{exports:{}}};vm.runInNewContext(code,ctx);const {wholeState}=ctx.module.exports;
+const P=[-15,-1.7],endPhi=116.565051*Math.PI/180;
+const cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+function area(p){return Math.abs(p.reduce((s,a,i)=>{let b=p[(i+1)%p.length];return s+a[0]*b[1]-a[1]*b[0]},0))/2}
+function clip(subject,clipper){let poly=subject;for(let i=0;i<clipper.length;i++){let a=clipper[i],b=clipper[(i+1)%clipper.length],input=poly;poly=[];if(!input.length)break;for(let j=0;j<input.length;j++){let c=input[j],d=input[(j+1)%input.length],u=cross(a,b,c),v=cross(a,b,d);if(u>=-1e-12)poly.push(c);if((u>=0)!==(v>=0)){let t=u/(u-v);poly.push([c[0]+t*(d[0]-c[0]),c[1]+t*(d[1]-c[1])]);}}}return poly}
+function phi(act){let k=Math.max(0,Math.min(1,(act-.25)/.5));return (155+(116.565051-155)*k)*Math.PI/180}
+function rotate(poly,ang){return poly.map(q=>{let x=q[0]-P[0],z=q[1]-P[1];return[P[0]+x*Math.cos(ang)-z*Math.sin(ang),P[1]+x*Math.sin(ang)+z*Math.cos(ang)]})}
+function candidateTip(act){return rotate([[-16.2,.10],[-15.8,.10],[-16,.78]],phi(act)-endPhi)}
+function candidateArm(act){return rotate([[-15.30,-1.85],[-14.70,-1.55],[-15.80,.10],[-16.20,.10]],phi(act)-endPhi)}
+function currentTip(act){let a=phi(act),x=P[0]+Math.sqrt(5)*Math.cos(a),z=P[1]+Math.sqrt(5)*Math.sin(a);return[[x-.3,z-.15],[x+.3,z-.15],[x+.3,z+.5],[x-.3,z+.5]]}
+function rack(bx){let r=[];for(let x=bx+.4;x<bx+19.8;x+=.65)r.push([[x,1],[x+.28,.2],[x+.55,1]]);r.push([[bx,1],[bx+20,1],[bx+20,4],[bx,4]]);return r}
+function overlap(poly,bx){return rack(bx).reduce((s,t)=>s+area(clip(poly,t)),0)}
+let samples=[];for(let paper of [.2,1,3.6,10])for(let i=0;i<=1000;i++){let pose=i/1000,st=wholeState({paperThickness:paper,pose}),bx=-st.r*st.scale; samples.push({paper,pose,angle:st.t*180/Math.PI,bx,act:st.act,phi:phi(st.act)*180/Math.PI,currentBoxArea:overlap(currentTip(st.act),bx),candidateTipArea:overlap(candidateTip(st.act),bx),candidateArmArea:overlap(candidateArm(st.act),bx)});}
+let phase=[];for(let i=0;i<=6500;i++){let shift=i/10000,bx=-33+shift;phase.push({shift,area:overlap(candidateTip(1),bx),armArea:overlap(candidateArm(1),bx)});}
+const summary={sourceSha256:crypto.createHash('sha256').update(code).digest('hex'),units:'mm, degrees, mm^2 projected intersection',scope:'Rigid finite polygon intersection only. No force, compliance, tooth contact equilibrium, out-of-plane collision or actual seating dynamics.',candidate:{finalTip:[[-16.2,.1],[-15.8,.1],[-16,.78]],fixedPivot:P,phiFinal:116.565051,rotation:'Whole rigid tip and tapered arm rotate about P. Runner never snaps or shifts.',note:'Candidate requires replacing the existing radius0.48 capsule near T with tapered arm; changing tip alone leaves the bulky capsule.'},phase:{sampleStep:.0001,period:.65,collisionFreeCount:phase.filter(x=>x.area<1e-9&&x.armArea<1e-9).length,total:phase.length,freeIntervals:[]},papers:[...new Set(samples.map(s=>s.paper))].map(paper=>{let s=samples.filter(s=>s.paper===paper),hold=s.find(s=>s.pose===.75);return {paper,hold,cycleMaxBoxArea:Math.max(...s.map(s=>s.currentBoxArea)),cycleMaxCandidateTipArea:Math.max(...s.map(s=>s.candidateTipArea)),cycleMaxCandidateArmArea:Math.max(...s.map(s=>s.candidateArmArea)),candidateCollisionSamples:s.filter(s=>s.candidateTipArea+s.candidateArmArea>1e-9).length,total:s.length}})};
+let interval=null;for(let s of phase){let free=s.area<1e-9&&s.armArea<1e-9;if(free&&!interval)interval=[s.shift,s.shift];if(free)interval[1]=s.shift;if(!free&&interval){summary.phase.freeIntervals.push(interval);interval=null}}if(interval)summary.phase.freeIntervals.push(interval);
+fs.writeFileSync(path.join(__dirname,'receipt.json'),JSON.stringify(summary,null,2));let keys=Object.keys(samples[0]);fs.writeFileSync(path.join(__dirname,'samples.csv'),keys.join(',')+'\n'+samples.map(s=>keys.map(k=>s[k]).join(',')).join('\n'));
+console.log(JSON.stringify(summary,null,2));
