@@ -31,3 +31,6 @@ Inspired by Craighill's public desk-pad/paper-holder exploration; reference link
 - `REFERENCES.md`: source provenance, traced proportions and explicit dimension assumptions.
 
 Analysis snapshots intentionally preserve the geometry they tested. The live viewer has a revised tooth preview; its linkage trajectory remains unchanged. The clearance helper checks each pose from the open pawl orientation. It is not a continuous contact-dynamics simulation. Reproduction of finite mesh checks alone does not verify a working physical lock.
+
+## Direct handle interaction
+Grab the visible A housing or its “Drag handle” target. Playback pauses; dragging follows the hinge plane with a screen-tangent fallback near edge-on views, bounded to 100–180 degrees. Opening and closing map onto the existing illustrative cycle branches; release keeps the pose. This is not a force interaction or a contact-history solve. Background dragging orbits the camera. Advanced inspection retains pose scrubbing, individual-part controls and geometric diagnostics.
